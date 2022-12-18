@@ -42,23 +42,27 @@
                                         <td class="px-4 py-3">{{ $book->author }}</td>
                                         <td class="px-4 py-3">{{ $book->publication_date }}</td>
                                         <td class="w-10 text-center">
-                                            <a href="{{ route('book.edit', $book) }}"
-                                                class="text-white bg-indigo-500 border-0 py-2 px-3 hover:bg-indigo-600 rounded">Edit</a>
+                                            <form action="{{ route('book.edit', $book) }}" method="get"
+                                                enctype="multipart/form-data">
+                                                @csrf
+                                                <button
+                                                    class="text-white bg-indigo-500 border-0 py-2 px-3 hover:bg-indigo-600 rounded"
+                                                    type="submit">
+                                                    Edit
+                                                </button>
+                                            </form>
                                         </td>
                                         <td class="w-10 text-center">
                                             <form action="{{ route('book.destroy', $book) }}" method="post"
                                                 enctype="multipart/form-data">
                                                 @csrf
-                                                {{-- @method('delete') --}}
-                                                <input name="_method" type="hidden" value="PATCH">
+                                                @method('delete')
                                                 <button
                                                     class="text-white bg-red-500 border-0 py-2 px-3 hover:bg-red-600 rounded"
                                                     type="submit" onclick="this.disabled=true;this.form.submit();">
-                                                    Delete
+                                                    X
                                                 </button>
                                             </form>
-                                            {{-- <a href="{{ route('book.show', $book) }}"
-                                                class="text-white bg-red-500 border-0 py-2 px-3 hover:bg-red-600 rounded">Delete</a> --}}
                                         </td>
                                     </tr>
                                 @endforeach

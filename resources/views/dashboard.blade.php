@@ -8,7 +8,9 @@
             </div>
             <div class="lg:w-4/5 w-full mx-auto overflow-auto">
                 <div class="text-right">
-                    <a href="{{ route('userbook.create') }}" class="btn btn-primary">+ Add Borrow</a>
+                    @if ($pages == 'admin')
+                        <a href="{{ route('userbook.create') }}" class="btn btn-primary">+ Add Borrow</a>
+                    @endif
                     <div>
                         <br>
                         <table class="table-auto w-full text-left whitespace-no-wrap">
@@ -23,9 +25,11 @@
                                     <th
                                         class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                         Author</th>
+                                    @if ($pages == 'admin')
                                         <th
-                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                        Borrower</th>
+                                            class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                            Borrower</th>
+                                    @endif
                                     <th
                                         class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                         Status</th>
@@ -41,6 +45,9 @@
                                     <th
                                         class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                     </th>
+                                    <th
+                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,7 +56,9 @@
                                         <td class="px-4 py-3">{{ $userbook->book->id }}</td>
                                         <td class="px-4 py-3">{{ $userbook->book->title }}</td>
                                         <td class="px-4 py-3">{{ $userbook->book->author }}</td>
-                                        <td class="px-4 py-3">{{ $userbook->user->username }}</td>
+                                        @if ($pages == 'admin')
+                                            <td class="px-4 py-3">{{ $userbook->user->username }}</td>
+                                        @endif
 
                                         <td class="px-4 py-3">
                                             @if ($userbook->status == '1')
@@ -62,18 +71,44 @@
                                         <td class="px-4 py-3">{{ $userbook->return_date }}</td>
                                         <td class="w-10 text-center">
                                             @if ($userbook->status == '1')
-                                                <form action="{{ route('userbook.update', $userbook) }}" method="post"
+                                                <form action="{{ route('userbook.return', $userbook) }}" method="post"
                                                     enctype="multipart/form-data">
                                                     @csrf
                                                     <input name="_method" type="hidden" value="PATCH">
-                                                    <button class="text-white bg-indigo-500 border-0 py-2 px-3 hover:bg-indigo-600 rounded" type="submit"
-                                                        onclick="this.disabled=true;this.form.submit();">
+                                                    <button
+                                                        class="text-white bg-indigo-500 border-0 py-2 px-3 hover:bg-indigo-600 rounded"
+                                                        type="submit" onclick="this.disabled=true;this.form.submit();">
                                                         Return
                                                     </button>
                                                 </form>
                                             @else
                                                 -
                                             @endif
+                                        </td>
+                                        <td class="w-10 text-center">
+                                            <form action="{{ route('userbook.edit', $userbook) }}" method="get"
+                                                enctype="multipart/form-data">
+                                                @csrf
+                                                <button
+                                                    class="text-white bg-indigo-500 border-0 py-2 px-3 hover:bg-indigo-600 rounded"
+                                                    type="submit">
+                                                    Edit
+                                                </button>
+                                            </form>
+                                        </td>
+                                        <td class="w-10 text-center">
+                                            <form action="{{ route('userbook.destroy', $userbook) }}" method="post"
+                                                enctype="multipart/form-data">
+                                                @csrf
+                                                @method('delete')
+                                                <button
+                                                    class="text-white bg-red-500 border-0 py-2 px-3 hover:bg-red-600 rounded"
+                                                    type="submit" onclick="this.disabled=true;this.form.submit();">
+                                                    X
+                                                </button>
+                                            </form>
+                                            {{-- <a href="{{ route('book.show', $book) }}"
+                                                class="text-white bg-red-500 border-0 py-2 px-3 hover:bg-red-600 rounded">Delete</a> --}}
                                         </td>
                                     </tr>
                                 @endforeach

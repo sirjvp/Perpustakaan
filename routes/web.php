@@ -29,4 +29,5 @@ Route::resource('userbook', UserBookController::class)->middleware(['auth', 'ver
 Route::group(['middleware' => 'admin','prefix' => 'admin'], function () {
     Route::resource('book', BookController::class)->middleware(['auth', 'verified']);
     Route::get('/userbook', [UserBookController::class, 'admin'])->middleware(['auth', 'verified'])->name('userbook.admin');
+    Route::match(['put', 'patch'], '/userbook/return/{userbook}', [UserBookController::class, 'return'])->middleware(['auth', 'verified'])->name('userbook.return');
 });

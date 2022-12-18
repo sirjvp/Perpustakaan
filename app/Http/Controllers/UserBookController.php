@@ -18,10 +18,11 @@ class UserBookController extends Controller
      */
     public function index()
     {
+        $pages = "user";
         $userbooks = UserBook::where('user_id', Auth::id())->get();
         // ->sortBy('province');
 
-        return view('dashboard', compact('userbooks'));
+        return view('dashboard', compact('userbooks', 'pages'));
     }
 
     /**
@@ -43,7 +44,7 @@ class UserBookController extends Controller
         // foreach($members as $member){
         //     dd($member->users);
         // }
-        return view('addloans', compact('books', 'members'));
+        return view('addborrow', compact('books', 'members'));
     }
 
     /**
@@ -64,7 +65,7 @@ class UserBookController extends Controller
         $return = Carbon::now()->addDays(7);
         $book->users()->attach([$user => ['status' => '1', 'borrowed_date' => $today, 'return_date' => $return]]);
 
-        return redirect()->route('userbook.index');
+        return redirect()->route('userbook.admin');
     }
 
     /**
@@ -84,9 +85,18 @@ class UserBookController extends Controller
      * @param  \App\Models\UserBook  $userBook
      * @return \Illuminate\Http\Response
      */
-    public function edit(UserBook $userBook)
+    public function edit(UserBook $userbook)
     {
-        //
+        $books = Book::doesntHave('users')
+                    ->orWhereHas('users', function($query) {
+                        $query->where('status', '0');
+                    })
+                    ->get();
+
+        $members = Member::with('users')
+                    ->get();
+
+        return view('editborrow', compact('userbook', 'books', 'members'));
     }
 
     /**
@@ -100,10 +110,11 @@ class UserBookController extends Controller
     {
         $userBook = UserBook::find($id);
         $userBook->update([
-            'status' => '0',
+            'book_id' => $request->book,
+            'user_id' => $request->user,
         ]);
 
-        return redirect()->route('userbook.index');
+        return redirect()->route('userbook.admin');
     }
 
     /**
@@ -112,16 +123,30 @@ class UserBookController extends Controller
      * @param  \App\Models\UserBook  $userBook
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserBook $userBook)
+    public function destroy($id)
     {
-        //
+        $userbook = UserBook::find($id);
+        $userbook->delete();
+
+        return redirect()->route('userbook.admin');
     }
 
     public function admin()
     {
+        $pages = "admin";
         $userbooks = UserBook::all();
         // ->sortBy('province');
 
-        return view('dashboard', compact('userbooks'));
+        return view('dashboard', compact('userbooks', 'pages'));
+    }
+
+    public function return($id)
+    {
+        $userBook = UserBook::find($id);
+        $userBook->update([
+            'status' => '0',
+        ]);
+
+        return redirect()->route('userbook.admin');
     }
 }

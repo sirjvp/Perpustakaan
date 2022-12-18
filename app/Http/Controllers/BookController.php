@@ -89,7 +89,7 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        return view('edit', compact('book'));
+        return view('editbook', compact('book'));
     }
 
     /**
@@ -135,9 +135,7 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        $book->update([
-            'is_delete' => '1',
-        ]);
+        $book->delete();
 
         return redirect()->route('book.index');
     }

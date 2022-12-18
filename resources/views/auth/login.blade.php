@@ -1,7 +1,41 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+    <div class="container">
+        {{-- <section class="text-gray-600 body-font relative">
+            <div class="container px-5 mx-auto">
+                <div class="flex flex-col text-center w-full mb-12">
+                    <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Login</h1>
+                    <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr hexagon brooklyn
+                        asymmetrical gentrify.</p>
+                </div>
+                <div class="lg:w-1/2 md:w-2/3 mx-auto">
+                    <div class="p-2 w-full"">
+                        <label for="title" class="leading-7 text-sm text-gray-600">Login</label>
+                        <input type="text" id="title" name="title"
+                            class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    <div class="p-2 w-full"">
+                        <label for="title" class="leading-7 text-sm text-gray-600">Password</label>
+                        <input type="text" id="title" name="title"
+                            class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    <div class="p-2 mt-4 w-full">
+                        <button
+                            class="text-white w-full bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                            type="submit" onclick="this.disabled=true;this.form.submit();">Login</button>
+                        <p class="text-xs text-gray-500 mt-3">Don't have an account?
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="text-xs text-blue-500 mt-3">
+                                Register here.
+                            </a>
+                        @endif
+                    </p>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </section> --}}
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
