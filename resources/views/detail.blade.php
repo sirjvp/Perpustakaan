@@ -39,7 +39,11 @@
             </div>
           </div>
           <div class="flex">
-            <span class="title-font font-medium text-2xl text-gray-900">Available</span>
+            @if ($condition == true)
+                <span class="title-font font-medium text-2xl text-indigo-500">Available</span>
+            @else
+                <span class="title-font font-medium text-2xl text-indigo-200">Not Available</span>
+            @endif
             {{-- <a href="{{ route('book.update', $book) }}" class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Borrow</a> --}}
           </div>
         </div>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Member;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -73,6 +75,23 @@ class RegisterController extends Controller
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+        ]);
+    }
+
+    protected function member(array $data)
+    {
+        return Member::create([
+            'phone' => $data['phone'],
+            'address' => $data['address'],
+        ]);
+    }
+
+    protected function employee(array $data)
+    {
+        return Employee::create([
+            'job_position' => $data['job_position'],
+            'hire_date' => $data['hire_date'],
+            'salary' => $data['salary'],
         ]);
     }
 

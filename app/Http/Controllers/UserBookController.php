@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\UserBook;
 use App\Models\Book;
-use App\Models\User;
+use App\Models\Member;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,10 +31,19 @@ class UserBookController extends Controller
      */
     public function create()
     {
-        $books = Book::all();
-        $users = User::all();
+        $books = Book::doesntHave('users')
+                    ->orWhereHas('users', function($query) {
+                        $query->where('status', '0');
+                    })
+                    ->get();
 
-        return view('addloans', compact('books', 'users'));
+        $members = Member::with('users')
+                    ->get();
+
+        // foreach($members as $member){
+        //     dd($member->users);
+        // }
+        return view('addloans', compact('books', 'members'));
     }
 
     /**

@@ -22,8 +22,8 @@ class User extends Authenticatable
         'email',
         'first_name',
         'last_name',
-        'phone',
-        'birthdate',
+        'role_id',
+        'role_type',
         'password',
         'is_admin',
         'is_delete',
@@ -50,6 +50,10 @@ class User extends Authenticatable
 
     public function books() {
         return $this->belongsToMany(Book::class, 'user_books', 'user_id', 'book_id')->withTimeStamps();
+    }
+
+    public function role() {
+        return $this->morphTo();
     }
 
     public function isAdmin() {

@@ -20,6 +20,8 @@ class UserSeeder extends Seeder
         $user->email = 'admin_a@admin.com';
         $user->first_name = 'Admin';
         $user->last_name = 'A';
+        $user->role_id = '1';
+        $user->role_type = 'App\Models\Employee';
         $user->password = Hash::make('passwordadmin');
         $user->email_verified_at = '2022-12-17 06:00:00';
         $user->is_admin = '1';
@@ -30,6 +32,8 @@ class UserSeeder extends Seeder
         $user->email = 'user_a@user.com';
         $user->first_name = 'User';
         $user->last_name = 'A';
+        $user->role_id = '1';
+        $user->role_type = 'App\Models\Member';
         $user->password = Hash::make('passworduser');
         $user->email_verified_at = '2022-12-17 06:00:00';
         $user->is_admin = '0';
@@ -40,6 +44,8 @@ class UserSeeder extends Seeder
         $user->email = 'user_b@user.com';
         $user->first_name = 'User';
         $user->last_name = 'B';
+        $user->role_id = '2';
+        $user->role_type = 'App\Models\Member';
         $user->password = Hash::make('passworduser');
         $user->email_verified_at = '2022-12-17 06:00:00';
         $user->is_admin = '0';
@@ -50,6 +56,8 @@ class UserSeeder extends Seeder
         $user->email = 'user_c@user.com';
         $user->first_name = 'User';
         $user->last_name = 'C';
+        $user->role_id = '3';
+        $user->role_type = 'App\Models\Member';
         $user->password = Hash::make('passworduser');
         $user->email_verified_at = '2022-12-17 06:00:00';
         $user->is_admin = '0';

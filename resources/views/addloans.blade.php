@@ -1,111 +1,84 @@
 @extends('layouts.app')
 @section('content')
-
-    {{-- MOBILE --}}
-    {{-- <div class="container-xxl p-5 d-md-none">
-        <div class="row justify-content-center">
-            <div style="overflow-y:scroll; height:100vh;">
-                <div class="container-fluid p-2 mb-5">
-                    <div class="text-right mb-3">
-                        <a href="" data-toggle="modal" data-target="#createsurvey" class="btn btn-primary ">Buat Survei</a>
-                    </div>
-                    <div class="container bg-white shadow p-2 mb-4" style="border-radius: 15px;">
-                        <h4 class="text-center">Survei Saya</h4>
-                    </div>
-                    @foreach ($surveys as $survey)
-                        <div class="card-list w-100 no-gutters">
-                            <div class="container bg-white no-gutters shadow pr-4 pl-4 pt-4 pb-3 mb-4"
-                                style="border-radius: 15px;">
-                                <div class="row">
-                                    <div class="col-11">
-                                        <h5 class="font-weight-bolder">
-                                            {{ $survey->title }}
-                                        </h5>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-8 text-dark">
-                                        {{ $survey->package->description }}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-10">
-                                        @if ($survey->status_id == '3')
-                                            @if ($survey->count < $survey->package->respondent)
-                                                Dibuka
-                                            @else
-                                                Ditutup
-                                            @endif
-                                        @else
-                                            {{ $survey->status->status }}
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="row mt-2 ">
-                                    <div class="col-5 mt-1 ">
-                                        {{ $survey->count }} / {{ $survey->package->respondent }}
-                                    </div>
-                                    <div class="col-7 no-gutters text-right">
-                                        <div class="row">
-                                            <div class="no-gutters text-right">
-                                                @if ($survey->status_id == 1 || $survey->status_id == 2)
-                                                    <a href="{{ route('survey.edit', $survey) }}" class="btn btn-primary"
-                                                        style="background-color: rgb(0,0,226);">Ubah</a>
-                                                @elseif($survey->status_id == 3)
-                                                    <a href="{{ route('survey.edit', $survey) }}" class="btn btn-primary"
-                                                        style="background-color: rgb(0,0,226);">Detail</a>
-                                                @elseif($survey->status_id == 4)
-                                                    <a href="" class="btn btn-primary"
-                                                        style="background-color: rgb(0,0,226);" data-toggle="modal"
-                                                        data-target="#pay-{{ $survey->id }}">Bayar</a>
-                                                @else
-                                                    -
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
+    <section class="text-gray-600 body-font">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="flex flex-col text-center w-full mb-12">
+                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Master Cleanse Reliac Heirloom
+                </h1>
+                <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr hexagon brooklyn
+                    asymmetrical gentrify, subway tile poke farm-to-table. Franzen you probably haven't heard of them man
+                    bun deep.</p>
             </div>
-        </div>
-    </div> --}}
+            <form action="{{ route('userbook.store') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <div
+                    class="flex lg:w-2/3 w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
 
-    {{-- DESKTOP --}}
-    <div class="container-xxl p-5 d-none d-md-block">
-        <div class="row justify-content-center">
-            <div class="col-9">
-                <div class="panel px-4 py-3 glass shadow" style="height:100vh;">
-                    <h5>Add Books</h5>
-                    <form action="{{ route('userbook.store') }}" method="post" enctype="multipart/form-data">
-                        @csrf
-                        <div class="container" style="padding: 20px 55px;">
-                            <div class="form-group"><label>Book</label>
-                                <br>
-                                <select name="book" class="custom-select">
-                                    @foreach ($books as $book)
-                                        <option value="{{ $book->id }}">{{ $book->title }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                    <div class="relative flex-grow w-full">
+                        <label for="full-name" class="leading-7 text-sm text-gray-600">Book</label>
+                        {{-- <input type="text" id="full-name" name="full-name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"> --}}
+                        <select name="book"
+                            class="w-full rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10">
+                            @foreach ($books as $book)
+                                <option value="{{ $book->id }}">{{ $book->title }}</option>
+                            @endforeach
+                        </select>
+                        <span
+                            class="absolute right-0 top-3 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" class="w-4 h-4" viewBox="0 0 24 24">
+                                <path d="M6 9l6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="relative flex-grow w-full">
+                        <label for="email" class="leading-7 text-sm text-gray-600">User</label>
+                        {{-- <input type="email" id="email" name="email" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"> --}}
+                        <select name="user" id="selectq" onchange="myFunction()"
+                            class="w-full rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10">
+                            @foreach ($members as $member)
+                                @foreach ($member->users as $mem)
+                                    <option value="{{ $mem->id }}">{{ $mem->username }}</option>
+                                @endforeach
+                            @endforeach
+                        </select>
+                        <span
+                            class="absolute right-0 top-3 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" class="w-4 h-4" viewBox="0 0 24 24">
+                                <path d="M6 9l6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </div>
 
-                            <div class="form-group"><label>Borrower</label>
-                                <br>
-                                <select name="user" class="custom-select">
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->username }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <button class="btn btn-success" id="createBtn" type="submit">Simpan</button>
-                        </div>
-
-                    </form>
+                    {{-- <button
+                        class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" onclick="this.disabled=true;this.form.submit();">Borrow</button> --}}
                 </div>
-            </div>
+                <div class="lg:w-2/3 md:w-1/2 flex flex-col mx-auto w-full md:py-8 mt-8 md:mt-0">
+                    {{-- @foreach ($members as $member) --}}
+                    <div class="relative mb-4">
+                        <label for="title" class="leading-7 text-sm text-gray-600">Phone</label>
+                        <input type="text" id="phone" name="title" value="{{ $members[0]->phone }}"
+                            class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    <div class="relative mb-4">
+                        <label for="title" class="leading-7 text-sm text-gray-600">Address</label>
+                        <input type="text" id="title" name="title"
+                            class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    {{-- @endforeach --}}
+                </div>
+            </form>
         </div>
-    </div>
+    </section>
+
+    {{-- Point Modal --}}
+    {{-- <script type="text/javascript">
+        var x = document.getElementById("selectq").value;
+        document.getElementById("phone").value = x;
+
+        function myFunction() {
+            var x = document.getElementById("selectq").value;
+        }
+    </script> --}}
 @endsection

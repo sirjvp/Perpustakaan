@@ -1,80 +1,48 @@
 @extends('layouts.app')
 @section('content')
-
-    {{-- MOBILE --}}
-    {{-- <div class="container-xxl p-5 d-md-none">
-        <div class="row justify-content-center">
-            <div style="overflow-y:scroll; height:100vh;">
-                <div class="container-fluid p-2 mb-5">
-                    <div class="text-right mb-3">
-                        <a href="" data-toggle="modal" data-target="#createsurvey" class="btn btn-primary ">Buat Survei</a>
-                    </div>
-                    <div class="container bg-white shadow p-2 mb-4" style="border-radius: 15px;">
-                        <h4 class="text-center">Survei Saya</h4>
-                    </div>
-                    @foreach ($surveys as $survey)
-                        <div class="card-list w-100 no-gutters">
-                            <div class="container bg-white no-gutters shadow pr-4 pl-4 pt-4 pb-3 mb-4"
-                                style="border-radius: 15px;">
-                                <div class="row">
-                                    <div class="col-11">
-                                        <h5 class="font-weight-bolder">
-                                            {{ $survey->title }}
-                                        </h5>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-8 text-dark">
-                                        {{ $survey->package->description }}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-10">
-                                        @if ($survey->status_id == '3')
-                                            @if ($survey->count < $survey->package->respondent)
-                                                Dibuka
-                                            @else
-                                                Ditutup
-                                            @endif
-                                        @else
-                                            {{ $survey->status->status }}
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="row mt-2 ">
-                                    <div class="col-5 mt-1 ">
-                                        {{ $survey->count }} / {{ $survey->package->respondent }}
-                                    </div>
-                                    <div class="col-7 no-gutters text-right">
-                                        <div class="row">
-                                            <div class="no-gutters text-right">
-                                                @if ($survey->status_id == 1 || $survey->status_id == 2)
-                                                    <a href="{{ route('survey.edit', $survey) }}" class="btn btn-primary"
-                                                        style="background-color: rgb(0,0,226);">Ubah</a>
-                                                @elseif($survey->status_id == 3)
-                                                    <a href="{{ route('survey.edit', $survey) }}" class="btn btn-primary"
-                                                        style="background-color: rgb(0,0,226);">Detail</a>
-                                                @elseif($survey->status_id == 4)
-                                                    <a href="" class="btn btn-primary"
-                                                        style="background-color: rgb(0,0,226);" data-toggle="modal"
-                                                        data-target="#pay-{{ $survey->id }}">Bayar</a>
-                                                @else
-                                                    -
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
+<section class="text-gray-600 body-font w-full">
+    <div class="container px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap">
+        <div class="lg:w-2/3 md:w-1/2 flex flex-col mx-auto w-full md:py-8 mt-8 md:mt-0">
+            <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">Edit Book</h2>
+            <form action="{{ route('book.store') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="relative mb-4">
+                <label for="title" class="leading-7 text-sm text-gray-600">Title</label>
+                <input type="text" id="title" name="title" value="{{ $book->title }}" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                 </div>
-            </div>
+                <div class="relative mb-4">
+                    <label for="author" class="leading-7 text-sm text-gray-600">Author</label>
+                    <input type="text" id="author" name="author" value="{{ $book->author }}" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                </div>
+                <div class="relative mb-4">
+                    <label for="genre" class="leading-7 text-sm text-gray-600">Genre</label>
+                    <input type="text" id="genre" name="genre" value="{{ $book->genre }}" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                </div>
+                <div class="relative mb-4">
+                    <label for="name" class="leading-7 text-sm text-gray-600">Publication Date</label>
+                    <input type="date" id="name" name="publication_date" value="{{ $book->publication_date }}" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                </div>
+                <div class="relative mb-4">
+                    <label for="synopsiss" class="leading-7 text-sm text-gray-600">Synopsis</label>
+                    <textarea id="synopsis" name="synopsis" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out">{{ $book->synopsis }}</textarea>
+                </div>
+                <div class="relative mb-4">
+                    <label for="cover" class="leading-7 text-sm text-gray-600">Cover Image</label>
+                    <br>
+                    <img style="height: 200px;" src="/cover_images/{{ $book->cover_image }}" alt="">
+                    <br>
+                    <label for="cover" class="leading-7 text-sm text-gray-600">Change Image</label>
+                    <input type="file" name="file" required>
+                </div>
+                <button class="text-white w-full bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" type="submit">Save</button>
+            </form>
+            <p class="text-xs text-gray-500 mt-3">Chicharrones blog helvetica normcore iceland tousled brook viral artisan.</p>
         </div>
-    </div> --}}
+    </div>
+</section>
 
     {{-- DESKTOP --}}
-    <div class="container-xxl p-5 d-none d-md-block">
+    {{-- <div class="container-xxl p-5 d-none d-md-block">
         <div class="row justify-content-center">
             <div class="col-9">
                 <div class="panel px-4 py-3 glass shadow" style="height:100vh;">
@@ -117,5 +85,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection

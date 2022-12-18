@@ -68,7 +68,17 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        return view('detail', compact('book'));
+        $borrows = $book->users;
+        $condition = true;
+
+        foreach($borrows as $borrow){
+            if($borrow->pivot->status == '1') {
+                $condition = false;
+            }
+        }
+
+        // dd($condition);
+        return view('detail', compact('book', 'condition'));
     }
 
     /**

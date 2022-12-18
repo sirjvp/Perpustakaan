@@ -1,80 +1,85 @@
 @extends('layouts.app')
 @section('content')
-
-    {{-- MOBILE --}}
-    {{-- <div class="container-xxl p-5 d-md-none">
-        <div class="row justify-content-center">
-            <div style="overflow-y:scroll; height:100vh;">
-                <div class="container-fluid p-2 mb-5">
-                    <div class="text-right mb-3">
-                        <a href="" data-toggle="modal" data-target="#createsurvey" class="btn btn-primary ">Buat Survei</a>
-                    </div>
-                    <div class="container bg-white shadow p-2 mb-4" style="border-radius: 15px;">
-                        <h4 class="text-center">Survei Saya</h4>
-                    </div>
-                    @foreach ($surveys as $survey)
-                        <div class="card-list w-100 no-gutters">
-                            <div class="container bg-white no-gutters shadow pr-4 pl-4 pt-4 pb-3 mb-4"
-                                style="border-radius: 15px;">
-                                <div class="row">
-                                    <div class="col-11">
-                                        <h5 class="font-weight-bolder">
-                                            {{ $survey->title }}
-                                        </h5>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-8 text-dark">
-                                        {{ $survey->package->description }}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-10">
-                                        @if ($survey->status_id == '3')
-                                            @if ($survey->count < $survey->package->respondent)
-                                                Dibuka
-                                            @else
-                                                Ditutup
-                                            @endif
-                                        @else
-                                            {{ $survey->status->status }}
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="row mt-2 ">
-                                    <div class="col-5 mt-1 ">
-                                        {{ $survey->count }} / {{ $survey->package->respondent }}
-                                    </div>
-                                    <div class="col-7 no-gutters text-right">
-                                        <div class="row">
-                                            <div class="no-gutters text-right">
-                                                @if ($survey->status_id == 1 || $survey->status_id == 2)
-                                                    <a href="{{ route('survey.edit', $survey) }}" class="btn btn-primary"
-                                                        style="background-color: rgb(0,0,226);">Ubah</a>
-                                                @elseif($survey->status_id == 3)
-                                                    <a href="{{ route('survey.edit', $survey) }}" class="btn btn-primary"
-                                                        style="background-color: rgb(0,0,226);">Detail</a>
-                                                @elseif($survey->status_id == 4)
-                                                    <a href="" class="btn btn-primary"
-                                                        style="background-color: rgb(0,0,226);" data-toggle="modal"
-                                                        data-target="#pay-{{ $survey->id }}">Bayar</a>
-                                                @else
-                                                    -
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
+    <section class="text-gray-600 body-font w-full">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="flex flex-col text-center w-full">
+                <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">List Borrowed Books</h1>
+                {{-- <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Banh mi cornhole echo park skateboard authentic crucifix neutra tilde lyft biodiesel artisan direct trade mumblecore 3 wolf moon twee</p> --}}
             </div>
-        </div>
-    </div> --}}
+            <div class="lg:w-4/5 w-full mx-auto overflow-auto">
+                <div class="text-right">
+                    <a href="{{ route('userbook.create') }}" class="btn btn-primary">+ Add Loan</a>
+                    <div>
+                        <br>
+                        <table class="table-auto w-full text-left whitespace-no-wrap">
+                            <thead>
+                                <tr>
+                                    <th
+                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+                                        ID</th>
+                                    <th
+                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                        Title</th>
+                                    <th
+                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                        Author</th>
+                                    <th
+                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                        Status</th>
+                                    <th
+                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                        Borrowed Date</th>
+                                    <th
+                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                        Return Date</th>
+                                    <th
+                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                        Action</th>
+                                    <th
+                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($userbooks as $userbook)
+                                    <tr>
+                                        <td class="px-4 py-3">{{ $userbook->book->id }}</td>
+                                        <td class="px-4 py-3">{{ $userbook->book->title }}</td>
+                                        <td class="px-4 py-3">{{ $userbook->book->author }}</td>
+
+                                        <td class="px-4 py-3">
+                                            @if ($userbook->status == '1')
+                                                Borrowed
+                                            @else
+                                                Returned
+                                            @endif
+                                        </td>
+                                        <td class="px-4 py-3">{{ $userbook->borrowed_date }}</td>
+                                        <td class="px-4 py-3">{{ $userbook->return_date }}</td>
+                                        <td class="w-10 text-center">
+                                            @if ($userbook->status == '1')
+                                                <form action="{{ route('userbook.update', $userbook) }}" method="post"
+                                                    enctype="multipart/form-data">
+                                                    @csrf
+                                                    <input name="_method" type="hidden" value="PATCH">
+                                                    <button class="text-white bg-indigo-500 border-0 py-2 px-3 hover:bg-indigo-600 rounded" type="submit"
+                                                        onclick="this.disabled=true;this.form.submit();">
+                                                        Return
+                                                    </button>
+                                                </form>
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+    </section>
 
     {{-- DESKTOP --}}
-    <div class="container-xxl p-5 d-none d-md-block">
+    {{-- <div class="container-xxl p-5 d-none d-md-block">
         <div class="row justify-content-center">
             <div class="col-md-9 text-right mb-3">
                 <a href="{{ route('userbook.create') }}" class="btn btn-primary">Record loan</a>
@@ -108,7 +113,7 @@
                                             {{ $userbook->book->author }}
                                         </td>
                                         <td>
-                                            @if($userbook->status == '1')
+                                            @if ($userbook->status == '1')
                                                 Borrowed
                                             @else
                                                 Returned
@@ -121,11 +126,13 @@
                                             {{ $userbook->return_date }}
                                         </td>
                                         <td>
-                                            @if($userbook->status == '1')
-                                                <form action="{{ route('userbook.update', $userbook) }}" method="post" enctype="multipart/form-data">
+                                            @if ($userbook->status == '1')
+                                                <form action="{{ route('userbook.update', $userbook) }}" method="post"
+                                                    enctype="multipart/form-data">
                                                     @csrf
                                                     <input name="_method" type="hidden" value="PATCH">
-                                                    <button class="btn btn-primary" type="submit" onclick="this.disabled=true;this.form.submit();">
+                                                    <button class="btn btn-primary" type="submit"
+                                                        onclick="this.disabled=true;this.form.submit();">
                                                         Return
                                                     </button>
                                                 </form>
@@ -141,5 +148,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection

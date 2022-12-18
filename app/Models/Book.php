@@ -20,6 +20,6 @@ class Book extends Model
     ];
 
     public function users() {
-        return $this->belongsToMany(User::class, 'user_books', 'book_id', 'user_id')->withTimeStamps();
+        return $this->belongsToMany(User::class, 'user_books', 'book_id', 'user_id')->withTimeStamps()->withPivot('status');
     }
 }
