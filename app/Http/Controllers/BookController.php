@@ -14,7 +14,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        //
+        $books = Book::all();
+
+        return view('books', compact('books'));
     }
 
     /**
@@ -24,7 +26,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        return view('addbooks');
     }
 
     /**
@@ -35,7 +37,27 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'file' => 'image',
+        ]);
+
+        if ($request->has('file')) {
+            $file_name = time() . '-' . $data['file']->getClientOriginalName();
+            $request->file->move(public_path('cover_images/'), $file_name);
+        }
+
+        $book = book::create([
+            'title' => $request->title,
+            'author' => $request->author,
+            'genre' => $request->genre,
+            'publication_date' => $request->publication_date,
+            'cover_image' => $file_name,
+            'synopsis' => $request->synopsis,
+            'submitted_by' => 1,
+            // 'submitted_by' => Auth::id(),
+        ]);
+
+        return redirect()->route('book.index');
     }
 
     /**
@@ -46,7 +68,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        //
+        return view('detail', compact('book'));
     }
 
     /**
@@ -57,7 +79,7 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        return view('edit', compact('book'));
     }
 
     /**
@@ -69,7 +91,30 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+        $data = $request->validate([
+            'file' => 'image',
+        ]);
+
+        if ($request->has('file')) {
+            $file_name = time() . '-' . $data['file']->getClientOriginalName();
+            $request->file->move(public_path('cover_images/'), $file_name);
+
+            $book->update([
+                'cover_image' => $file_name
+            ]);
+        }
+
+        $book->update([
+            'title' => $request->title,
+            'author' => $request->author,
+            'synopsis' => $request->synopsis,
+            'genre' => $request->genre,
+            'publication_date' => $request->publication_date,
+            // 'submitted_by' => $request->submitted_by
+            'submitted_by' => 1,
+        ]);
+
+        return redirect()->route('book.index');
     }
 
     /**
@@ -80,6 +125,17 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $book->update([
+            'is_delete' => '1',
+        ]);
+
+        return redirect()->route('book.index');
+    }
+
+    public function catalog()
+    {
+        $books = Book::all();
+
+        return view('catalog', compact('books'));
     }
 }

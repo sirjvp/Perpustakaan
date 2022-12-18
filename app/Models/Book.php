@@ -17,8 +17,9 @@ class Book extends Model
         'cover_image',
         'publication_date',
         'submitted_by',
-        'status',
-        'borrowed_date',
-        'return_date'
     ];
+
+    public function users() {
+        return $this->belongsToMany(User::class, 'user_books', 'book_id', 'user_id')->withTimeStamps();
+    }
 }

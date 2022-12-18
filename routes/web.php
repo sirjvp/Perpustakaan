@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\UserBookController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +23,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/catalog', [BookController::class, 'catalog'])->name('catalog');
+Route::resource('userbook', UserBookController::class)->middleware(['auth', 'verified']);
+
+Route::group(['middleware' => 'admin','prefix' => 'admin'], function () {
+    Route::resource('book', BookController::class)->middleware(['auth', 'verified']);
+    Route::get('/userbook', [UserBookController::class, 'admin'])->middleware(['auth', 'verified'])->name('userbook.admin');
+});
