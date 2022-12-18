@@ -1,14 +1,14 @@
 @extends('layouts.app')
 @section('content')
     <section class="text-gray-600 body-font w-full">
-        <div class="container px-5 py-24 mx-auto">
+        <div class="container px-5 mx-auto">
             <div class="flex flex-col text-center w-full">
                 <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">List Borrowed Books</h1>
                 {{-- <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Banh mi cornhole echo park skateboard authentic crucifix neutra tilde lyft biodiesel artisan direct trade mumblecore 3 wolf moon twee</p> --}}
             </div>
             <div class="lg:w-4/5 w-full mx-auto overflow-auto">
                 <div class="text-right">
-                    <a href="{{ route('userbook.create') }}" class="btn btn-primary">+ Add Loan</a>
+                    <a href="{{ route('userbook.create') }}" class="btn btn-primary">+ Add Borrow</a>
                     <div>
                         <br>
                         <table class="table-auto w-full text-left whitespace-no-wrap">
@@ -23,6 +23,9 @@
                                     <th
                                         class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                         Author</th>
+                                        <th
+                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                        Borrower</th>
                                     <th
                                         class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                         Status</th>
@@ -46,6 +49,7 @@
                                         <td class="px-4 py-3">{{ $userbook->book->id }}</td>
                                         <td class="px-4 py-3">{{ $userbook->book->title }}</td>
                                         <td class="px-4 py-3">{{ $userbook->book->author }}</td>
+                                        <td class="px-4 py-3">{{ $userbook->user->username }}</td>
 
                                         <td class="px-4 py-3">
                                             @if ($userbook->status == '1')

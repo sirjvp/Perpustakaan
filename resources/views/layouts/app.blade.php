@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,6 +29,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
+
 <body>
     {{-- <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -95,16 +97,43 @@
             @yield('content')
         </main>
     </div> --}}
-    <div class="wrapper d-flex align-items-stretch">
-        <nav id="sidebar" class="" style="background:rgba(255,255,255, 0.5);">
+    <header class="text-gray-600 body-font">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+            <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                    stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full"
+                    viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                </svg>
+                <span class="ml-3 text-xl">Perpustakaan</span>
+            </a>
+            <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+                {{-- <a class="mr-5 hover:text-gray-900">First Link</a> --}}
+                <a href="{{ route('catalog') }}" class="mr-5 hover:text-gray-900">Book
+                    Catalog</a>
+                <a href="{{ route('userbook.index') }}" class="mr-5 hover:text-gray-900">My Borrowed Books</a>
+                <a href="{{ route('book.index') }}" class="mr-5 hover:text-gray-900">List Books</a>
+                <a href="{{ route('userbook.admin') }}" class="mr-5 hover:text-gray-900">List Borrowed Books</a>
+            </nav>
+            <button
+                class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Logout
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+    <div>
+        {{-- <nav id="sidebar" class="" style="background:rgba(255,255,255, 0.5);">
             <div class="custom-menu">
                 <button type="button" id="sidebarCollapse" class="btn btn-primary">
                     <i class="fa fa-bars"></i>
                     <span class="sr-only">Toggle Menu</span>
                 </button>
             </div>
-            <h1><a href="{{ route('book.index') }}" class="logo"><img style="height: 30px;"
-                        src="/images/survit.png" alt=""></a></h1>
+            <h1><a href="{{ route('book.index') }}" class="logo"><img style="height: 30px;" src="/images/survit.png"
+                        alt=""></a></h1>
             <ul class="list-unstyled components mb-5 bg-ls ">
                 @guest
                     @if (Route::has('login'))
@@ -122,21 +151,21 @@
                     @endif
                 @else
                     <li>
-                        <a href="{{ route('catalog') }}" class="text-dark"><span
-                            class="fa fa-home mr-3"></span> Book Catalog</a>
+                        <a href="{{ route('catalog') }}" class="text-dark"><span class="fa fa-home mr-3"></span> Book
+                            Catalog</a>
                     </li>
                     <li>
-                        <a href="{{ route('userbook.index') }}" class="text-dark"><span
-                            class="fa fa-home mr-3"></span> Borrowed Books</a>
+                        <a href="{{ route('userbook.index') }}" class="text-dark"><span class="fa fa-home mr-3"></span>
+                            Borrowed Books</a>
                     </li>
                     @if (Auth::user()->isAdmin())
                         <li>
-                            <a href="{{ route('book.index') }}" class="text-dark"><span
-                                    class="fa fa-user mr-3"></span> List Books</a>
+                            <a href="{{ route('book.index') }}" class="text-dark"><span class="fa fa-user mr-3"></span> List
+                                Books</a>
                         </li>
                         <li>
-                            <a href="{{ route('userbook.admin') }}" class="text-dark"><span
-                                    class="fa fa-user mr-3"></span> List Borrowed Books</a>
+                            <a href="{{ route('userbook.admin') }}" class="text-dark"><span class="fa fa-user mr-3"></span>
+                                List Borrowed Books</a>
                         </li>
                     @endif
                     <li>
@@ -149,30 +178,30 @@
                     </form>
                 @endguest
             </ul>
-        </nav>
+        </nav> --}}
         @yield('content')
     </div>
     <script>
-        (function ($) {
+        (function($) {
 
             "use strict";
 
-            var fullHeight = function () {
+            var fullHeight = function() {
 
                 $('.js-fullheight').css('height', $(window).height());
-                $(window).resize(function () {
+                $(window).resize(function() {
                     $('.js-fullheight').css('height', $(window).height());
                 });
 
             };
             fullHeight();
 
-            $('#sidebarCollapse').on('click', function () {
+            $('#sidebarCollapse').on('click', function() {
                 $('#sidebar').toggleClass('active');
             });
 
         })(jQuery);
-
     </script>
 </body>
+
 </html>

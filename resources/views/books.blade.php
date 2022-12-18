@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <section class="text-gray-600 body-font w-full">
-        <div class="container px-5 py-24 mx-auto">
+        <div class="container px-5 mx-auto">
             <div class="flex flex-col text-center w-full">
                 <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">List Books</h1>
                 {{-- <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Banh mi cornhole echo park skateboard authentic crucifix neutra tilde lyft biodiesel artisan direct trade mumblecore 3 wolf moon twee</p> --}}

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <section class="text-gray-600 body-font w-full">
-        <div class="container px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap">
+        <div class="container px-5 mx-auto flex sm:flex-nowrap flex-wrap">
             <div class="lg:w-2/3 md:w-1/2 flex flex-col mx-auto w-full md:py-8 mt-8 md:mt-0">
                 <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">Add Book</h2>
                 <form action="{{ route('book.store') }}" method="post" enctype="multipart/form-data">
