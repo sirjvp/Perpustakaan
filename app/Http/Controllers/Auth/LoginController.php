@@ -74,7 +74,7 @@ class LoginController extends Controller
 
             // if unsuccessful -> redirect back
             return redirect()->back()->withInput($request->only('email', 'password'))->withErrors([
-                'password' => 'Email or password is invalid.',
+                'password' => 'Password is incorrect.',
             ]);
         }
 
