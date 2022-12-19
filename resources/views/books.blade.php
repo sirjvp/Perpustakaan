@@ -2,13 +2,18 @@
 @section('content')
     <section class="text-gray-600 body-font w-full">
         <div class="container px-5 mx-auto">
+            {{-- Title --}}
             <div class="flex flex-col text-center w-full">
                 <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">List Books</h1>
-                {{-- <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Banh mi cornhole echo park skateboard authentic crucifix neutra tilde lyft biodiesel artisan direct trade mumblecore 3 wolf moon twee</p> --}}
             </div>
+
+            {{-- Table Section --}}
             <div class="lg:w-4/5 w-full mx-auto overflow-auto">
                 <div class="text-right">
+                    {{-- Add Butotn --}}
                     <a href="{{ route('book.create') }}" class="btn btn-primary">+ Add Book</a>
+
+                    {{-- Table --}}
                     <div>
                         <br>
                         <table class="table-auto w-full text-left whitespace-no-wrap">

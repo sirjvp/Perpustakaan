@@ -56,6 +56,8 @@ class RegisterController extends Controller
             'username' => ['required', 'string', 'max:255', 'unique:users'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -67,12 +69,14 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    protected function create(array $data, Member $member)
     {
         return User::create([
             'username' => $data['username'],
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
+            'role_type' => 'App\Models\Member',
+            'role_id' => $member->id,
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
@@ -91,7 +95,6 @@ class RegisterController extends Controller
         return Employee::create([
             'job_position' => $data['job_position'],
             'hire_date' => $data['hire_date'],
-            'salary' => $data['salary'],
         ]);
     }
 
@@ -99,7 +102,9 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        $user = $this->create($request->all());
+        $member = $this->member($request->all());
+
+        $user = $this->create($request->all(), $member);
 
         if(empty($user)){
             redirect()->route('register');

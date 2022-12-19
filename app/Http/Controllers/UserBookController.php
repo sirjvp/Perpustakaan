@@ -32,6 +32,7 @@ class UserBookController extends Controller
      */
     public function create()
     {
+        // Polymoprhism
         $books = Book::doesntHave('users')
                     ->orWhereHas('users', function($query) {
                         $query->where('status', '0');
@@ -55,14 +56,13 @@ class UserBookController extends Controller
      */
     public function store(Request $request)
     {
-        // $book = Book::find($request->id);
-        // $user = Auth::id();
-
         $book = Book::find($request->book);
         $user = $request->user;
 
+        // Get date after 7 days
         $today = Carbon::now();
         $return = Carbon::now()->addDays(7);
+
         $book->users()->attach([$user => ['status' => '1', 'borrowed_date' => $today, 'return_date' => $return]]);
 
         return redirect()->route('userbook.admin');
@@ -87,6 +87,7 @@ class UserBookController extends Controller
      */
     public function edit(UserBook $userbook)
     {
+        // Only show availble books
         $books = Book::doesntHave('users')
                     ->orWhereHas('users', function($query) {
                         $query->where('status', '0');

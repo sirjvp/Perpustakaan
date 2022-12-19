@@ -2,15 +2,20 @@
 @section('content')
     <section class="text-gray-600 body-font w-full">
         <div class="container px-5 mx-auto">
+            {{-- Title --}}
             <div class="flex flex-col text-center w-full">
                 <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">List Borrowed Books</h1>
-                {{-- <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Banh mi cornhole echo park skateboard authentic crucifix neutra tilde lyft biodiesel artisan direct trade mumblecore 3 wolf moon twee</p> --}}
             </div>
+
+            {{-- Table Section --}}
             <div class="lg:w-4/5 w-full mx-auto overflow-auto">
                 <div class="text-right">
+                    {{-- Add Button --}}
                     @if ($pages == 'admin')
                         <a href="{{ route('userbook.create') }}" class="btn btn-primary">+ Add Borrow</a>
                     @endif
+
+                    {{-- Table --}}
                     <div>
                         <br>
                         <table class="table-auto w-full text-left whitespace-no-wrap">
@@ -39,15 +44,17 @@
                                     <th
                                         class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                         Return Date</th>
-                                    <th
-                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                        Action</th>
-                                    <th
-                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                    </th>
-                                    <th
-                                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                    </th>
+                                    @if (Auth::user()->is_admin == '1')
+                                        <th
+                                            class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                            Action</th>
+                                        <th
+                                            class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                        </th>
+                                        <th
+                                            class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                        </th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -69,47 +76,47 @@
                                         </td>
                                         <td class="px-4 py-3">{{ $userbook->borrowed_date }}</td>
                                         <td class="px-4 py-3">{{ $userbook->return_date }}</td>
-                                        <td class="w-10 text-center">
-                                            @if ($userbook->status == '1')
-                                                <form action="{{ route('userbook.return', $userbook) }}" method="post"
+                                        @if (Auth::user()->is_admin == '1')
+                                            <td class="w-10 text-center">
+                                                @if ($userbook->status == '1')
+                                                    <form action="{{ route('userbook.return', $userbook) }}" method="post"
+                                                        enctype="multipart/form-data">
+                                                        @csrf
+                                                        <input name="_method" type="hidden" value="PATCH">
+                                                        <button
+                                                            class="text-white bg-indigo-500 border-0 py-2 px-3 hover:bg-indigo-600 rounded"
+                                                            type="submit" onclick="this.disabled=true;this.form.submit();">
+                                                            Return
+                                                        </button>
+                                                    </form>
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
+                                            <td class="w-10 text-center">
+                                                <form action="{{ route('userbook.edit', $userbook) }}" method="get"
                                                     enctype="multipart/form-data">
                                                     @csrf
-                                                    <input name="_method" type="hidden" value="PATCH">
                                                     <button
                                                         class="text-white bg-indigo-500 border-0 py-2 px-3 hover:bg-indigo-600 rounded"
-                                                        type="submit" onclick="this.disabled=true;this.form.submit();">
-                                                        Return
+                                                        type="submit">
+                                                        Edit
                                                     </button>
                                                 </form>
-                                            @else
-                                                -
-                                            @endif
-                                        </td>
-                                        <td class="w-10 text-center">
-                                            <form action="{{ route('userbook.edit', $userbook) }}" method="get"
-                                                enctype="multipart/form-data">
-                                                @csrf
-                                                <button
-                                                    class="text-white bg-indigo-500 border-0 py-2 px-3 hover:bg-indigo-600 rounded"
-                                                    type="submit">
-                                                    Edit
-                                                </button>
-                                            </form>
-                                        </td>
-                                        <td class="w-10 text-center">
-                                            <form action="{{ route('userbook.destroy', $userbook) }}" method="post"
-                                                enctype="multipart/form-data">
-                                                @csrf
-                                                @method('delete')
-                                                <button
-                                                    class="text-white bg-red-500 border-0 py-2 px-3 hover:bg-red-600 rounded"
-                                                    type="submit" onclick="this.disabled=true;this.form.submit();">
-                                                    X
-                                                </button>
-                                            </form>
-                                            {{-- <a href="{{ route('book.show', $book) }}"
-                                                class="text-white bg-red-500 border-0 py-2 px-3 hover:bg-red-600 rounded">Delete</a> --}}
-                                        </td>
+                                            </td>
+                                            <td class="w-10 text-center">
+                                                <form action="{{ route('userbook.destroy', $userbook) }}" method="post"
+                                                    enctype="multipart/form-data">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button
+                                                        class="text-white bg-red-500 border-0 py-2 px-3 hover:bg-red-600 rounded"
+                                                        type="submit" onclick="this.disabled=true;this.form.submit();">
+                                                        X
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

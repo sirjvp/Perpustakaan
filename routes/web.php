@@ -24,6 +24,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/catalog', [BookController::class, 'catalog'])->name('catalog');
+Route::get('/catalog/{book}', [BookController::class, 'detail'])->name('catalog.detail');
 Route::resource('userbook', UserBookController::class)->middleware(['auth', 'verified']);
 
 Route::group(['middleware' => 'admin','prefix' => 'admin'], function () {

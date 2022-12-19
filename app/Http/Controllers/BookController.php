@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
@@ -37,6 +38,7 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
+        // Image Validation
         $data = $request->validate([
             'file' => 'image',
         ]);
@@ -46,15 +48,14 @@ class BookController extends Controller
             $request->file->move(public_path('cover_images/'), $file_name);
         }
 
-        $book = book::create([
+        book::create([
             'title' => $request->title,
             'author' => $request->author,
             'genre' => $request->genre,
             'publication_date' => $request->publication_date,
             'cover_image' => $file_name,
             'synopsis' => $request->synopsis,
-            'submitted_by' => 1,
-            // 'submitted_by' => Auth::id(),
+            'submitted_by' => Auth::id(),
         ]);
 
         return redirect()->route('book.index');
@@ -68,6 +69,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
+        // Check Status Avaiability
         $borrows = $book->users;
         $condition = true;
 
@@ -101,6 +103,7 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
+        // Image Validation
         $data = $request->validate([
             'file' => 'image',
         ]);
@@ -120,8 +123,7 @@ class BookController extends Controller
             'synopsis' => $request->synopsis,
             'genre' => $request->genre,
             'publication_date' => $request->publication_date,
-            // 'submitted_by' => $request->submitted_by
-            'submitted_by' => 1,
+            'submitted_by' => Auth::id(),
         ]);
 
         return redirect()->route('book.index');
@@ -145,5 +147,21 @@ class BookController extends Controller
         $books = Book::all();
 
         return view('catalog', compact('books'));
+    }
+
+    public function detail(Book $book)
+    {
+        // Check Status Availability
+        $borrows = $book->users;
+        $condition = true;
+
+        foreach($borrows as $borrow){
+            if($borrow->pivot->status == '1') {
+                $condition = false;
+            }
+        }
+
+        // dd($condition);
+        return view('detail', compact('book', 'condition'));
     }
 }
