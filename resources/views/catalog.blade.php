@@ -28,26 +28,30 @@
     </section>
 
     {{-- Account --}}
-    <div class="fixed bottom-0 right-0 p-4 lg:w-1/3 md:w-full">
-        <div class="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-8 sm:flex-row flex-col bg-white">
-            <div
-                class="w-16 h-16 sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
-                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    class="w-10 h-10" viewBox="0 0 24 24">
-                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-            </div>
-            <div class="flex-grow">
-                <h2 class="text-gray-900 text-lg title-font font-medium mb-2">{{ Auth::user()->username }}</h2>
-                @if (Auth::user()->role_type == 'App\Models\Employee')
-                    <p class="leading-relaxed text-base">{{ Auth::user()->role->job_position }}</p>
-                    <p class="leading-relaxed text-base">{{ Auth::user()->role->hire_date }}</p>
-                @else
-                    <p class="leading-relaxed text-base">{{ Auth::user()->role->phone }}</p>
-                    <p class="leading-relaxed text-base">{{ Auth::user()->role->address }}</p>
-                @endif
+    @if (Auth::user() != null)
+        <div class="fixed bottom-0 right-0 p-4 lg:w-1/3 md:w-full">
+            <div class="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-8 sm:flex-row flex-col bg-white">
+                <div
+                    class="w-16 h-16 sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" class="w-10 h-10" viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <div class="flex-grow">
+                    <h2 class="text-gray-900 text-lg title-font font-medium mb-2">{{ Auth::user()->username }}</h2>
+
+                    @if (Auth::user()->role_type == 'App\Models\Employee')
+                        <p class="leading-relaxed text-base">{{ Auth::user()->role->job_position }}</p>
+                        <p class="leading-relaxed text-base">{{ Auth::user()->role->hire_date }}</p>
+                    @else
+                        <p class="leading-relaxed text-base">{{ Auth::user()->role->phone }}</p>
+                        <p class="leading-relaxed text-base">{{ Auth::user()->role->address }}</p>
+                    @endif
+
+                </div>
             </div>
         </div>
-    </div>
+    @endif
 @endsection
